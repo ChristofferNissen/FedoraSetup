@@ -11,6 +11,7 @@
 ./install_spotify.sh
 ./install_discord.sh
 ./install_zoom.sh
+./install_forticlient.sh
 
 # container
 ./install_docker.sh
@@ -35,6 +36,7 @@ python --version
 
 # final system update
 ./update.sh
+
 
 ./install_ohmyzsh.sh # fix config copy
 
