@@ -20,7 +20,6 @@
 ./install_faas-cli.sh
 
 # programming languages
-
 # Dotnet core
 ./install_dotnetcore.sh
 # Go
@@ -31,8 +30,13 @@ python --version
 # Java 8 & 11
 ./install_java.sh
 # Kotlin
+# Scala
+# F#
 
 # final system update
 ./update.sh
 
 ./install_ohmyzsh.sh # fix config copy
+
+#TODO
+# Setup repo for vscode config
