@@ -37,8 +37,9 @@ python --version
 # final system update
 ./update.sh
 
-
 ./install_ohmyzsh.sh # fix config copy
 
 #TODO
 # Setup repo for vscode config
+# Setup kubeconfig
+# Setup zshrc
