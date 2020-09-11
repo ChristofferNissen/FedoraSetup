@@ -41,4 +41,12 @@ sudo grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0"
 sudo systemctl enable docker
 sudo systemctl start docker
 
-sudo docker run hello-world
+# permissions
+
+sudo groupadd docker
+sudo usermod -aG docker cn
+newgrp docker 
+
+docker run hello-world
+
+sudo dnf -y install docker-compose
