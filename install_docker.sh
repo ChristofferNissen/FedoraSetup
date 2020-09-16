@@ -50,3 +50,8 @@ newgrp docker
 docker run hello-world
 
 sudo dnf -y install docker-compose
+
+# fix network issues in Fedora 32
+# https://dev.to/ozorest/fedora-32-how-to-solve-docker-internal-network-issue-22me
+firewall-cmd --permanent --zone=trusted --add-interface=docker0
+firewall-cmd --reload
