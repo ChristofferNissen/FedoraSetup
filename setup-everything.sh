@@ -1,4 +1,6 @@
 #!/bin/bash
+set e
+set x
 
 # basic
 ./install_rpmfusion.sh
@@ -15,18 +17,28 @@
 
 # setup .dotnet repo
 # if dir doesnt exist
-git clone git@github.com:ChristofferNissen/dotfiles.git
-./dotfiles/create-symlinks.sh
-./install_i3.sh
+DIR="./dotfiles/"
+if [ -d "$DIR" ]; then
+  # dont do anything
+  echo "dotfiles already exists"
+else 
+  # Take action if $DIR doesnt exists. #
+  # run script in dotfiles to create symlinks
+  echo "Cloning dotfiles.."
+  git clone git@github.com:ChristofferNissen/dotfiles.git
+  echo "Installing config files in ${DIR}..."
+  ./dotfiles/create-symlinks.sh
+  ./install_i3.sh
+fi
 
-# container
+# container tools
 ./install_docker.sh
 ./install_k3sup.sh
 ./install_arkade.sh
 ./install_arkade_tools.sh
 ./install_faas-cli.sh
 
-# programming languages
+# Programming languages
 # Dotnet core
 ./install_dotnetcore.sh
 # Go
@@ -34,11 +46,14 @@ git clone git@github.com:ChristofferNissen/dotfiles.git
 # Python
 python --version
 # Rust
+sudo dnf install -y rust cargo
 # Java 8 & 11
 ./install_java.sh
 # Kotlin
 # Scala
-# F#
+sudo dnf install -y scala
+# F# [Already included in dotnet core]
+# C
 
 # final system update
 ./update.sh
@@ -50,4 +65,4 @@ python --version
 # Setup kubeconfig
 # Setup zshrc
 # git config
-# i3
+./create-git-config.sh
