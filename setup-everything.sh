@@ -5,6 +5,30 @@ set x
 # basic
 ./install_rpmfusion.sh
 ./install_commodities.sh
+
+DIR="../dotfiles/"
+if [ -d "$DIR" ]; then
+  echo "dotfiles already exists"
+  cd dotfiles
+  ./create-symlinks.sh
+  cd ..
+  cd FedoraSetup
+else 
+  # Take action if $DIR doesnt exists. #
+  # run script in dotfiles to create symlinks
+  echo "Cloning dotfiles.."
+  cd ..
+  git clone git@github.com:ChristofferNissen/dotfiles.git
+  echo "Installing config files in ${DIR}..."
+  cd dotfiles
+  ./create-symlinks.sh
+  cd ..
+  cd FedoraSetup
+fi
+
+./install_i3.sh
+
+# Work Apps
 ./install_alacritty.sh
 ./install_slack.sh
 ./install_teams.sh
@@ -15,24 +39,8 @@ set x
 ./install_zoom.sh
 ./install_forticlient.sh
 
-# setup .dotnet repo
-# if dir doesnt exist
-DIR="./dotfiles/"
-if [ -d "$DIR" ]; then
-  # dont do anything
-  echo "dotfiles already exists"
-else 
-  # Take action if $DIR doesnt exists. #
-  # run script in dotfiles to create symlinks
-  echo "Cloning dotfiles.."
-  git clone git@github.com:ChristofferNissen/dotfiles.git
-  echo "Installing config files in ${DIR}..."
-  ./dotfiles/create-symlinks.sh
-  ./install_i3.sh
-fi
-
 # container tools
-./install_docker.sh
+#./install_docker.sh
 ./install_k3sup.sh
 ./install_arkade.sh
 ./install_arkade_tools.sh
@@ -58,11 +66,9 @@ sudo dnf install -y scala
 # final system update
 ./update.sh
 
-./install_ohmyzsh.sh # fix config copy
+./install_ohmyzsh.sh 
 
-#TODO
-# Setup repo for vscode config
-# Setup kubeconfig
-# Setup zshrc
-# git config
+#git config
 ./create-git-config.sh
+
+echo "Please restart for updates to take effect, and switch to i3"
