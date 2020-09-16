@@ -13,6 +13,12 @@
 ./install_zoom.sh
 ./install_forticlient.sh
 
+# setup .dotnet repo
+# if dir doesnt exist
+git clone git@github.com:ChristofferNissen/dotfiles.git
+./dotfiles/create-symlinks.sh
+./install_i3.sh
+
 # container
 ./install_docker.sh
 ./install_k3sup.sh
@@ -43,3 +49,5 @@ python --version
 # Setup repo for vscode config
 # Setup kubeconfig
 # Setup zshrc
+# git config
+# i3
