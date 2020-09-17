@@ -1,6 +1,6 @@
 #!/bin/bash
-set e
-set x
+# set e
+# set x
 
 cat << "EOF" 
  _____        _                 
@@ -31,6 +31,7 @@ EOF
 ./install_1password.sh
 ./install_forticlient.sh
 ./install_spotify.sh
+./install-githubcli.sh
 
 cat << "EOF" 
   ____                _   _             
@@ -50,7 +51,8 @@ EOF
 DIR="../dotfiles/"
 if [ -d "$DIR" ]; then
   echo "dotfiles already exists"
-  cd dotfiles
+  cd ../dotfiles
+  git pull
   ./create-symlinks.sh
   cd ..
   cd FedoraSetup
@@ -75,13 +77,16 @@ cat << "EOF"
 |_|____/ 
          
 EOF
-
 ./install_i3.sh
+
+# i3-gaps dependencies
+sudo dnf install libxcb-devel xcb-util-keysyms-devel xcb-util-devel xcb-util-wm-devel xcb-util-xrm-devel yajl-devel libXrandr-devel startup-notification-devel libev-devel xcb-util-cursor-devel libXinerama-devel libxkbcommon-devel libxkbcommon-x11-devel pcre-devel pango-devel git gcc automake i3status i3lock
 
 # i3-gaps
 DIR="../i3-gaps/"
 if [ -d "$DIR" ]; then
   echo "i3-gaps already exists"
+  cd ..
   cd i3-gaps
   git checkout gaps && git pull
   autoreconf --force --install
@@ -91,7 +96,7 @@ if [ -d "$DIR" ]; then
   ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
   make
   sudo make install
-  cd ..
+  cd ../..
   cd FedoraSetup
 else 
   # Take action if $DIR doesnt exists. #
@@ -108,7 +113,7 @@ else
   ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
   make
   sudo make install
-  cd ..
+  cd ../..
   cd FedoraSetup
 fi
 
