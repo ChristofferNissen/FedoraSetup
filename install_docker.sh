@@ -2,6 +2,10 @@
 set x
 set e
 
+##########
+# DOCKER #
+########## 
+
 #remove old
 sudo dnf remove -y docker \
                   docker-client \
@@ -15,8 +19,9 @@ sudo dnf remove -y docker \
                   docker-engine
 
 #Install using the repository (recommended)
-sudo dnf -y install dnf-plugins-core
+#sudo dnf -y install dnf-plugins-core
 
+# From documentaton. Does not work in Fedora32 (yet (sep20))
 #sudo dnf config-manager \
 #    --add-repo \
 #    https://download.docker.com/linux/fedora/docker-ce.repo
@@ -42,16 +47,30 @@ sudo systemctl enable docker
 sudo systemctl start docker
 
 # permissions
+group='docker'
+ if grep -q $group /etc/group
+    then
+         echo "'docker' group exists"
+    else
+        echo "'docker' group does not exist"
+        sudo groupadd docker 
+        sudo usermod -aG docker cn
+        newgrp docker 
+    fi
 
-sudo groupadd docker
-sudo usermod -aG docker cn
-newgrp docker 
-
+# test permissions are working
 docker run hello-world
 
+##################
+# DOCKER COMPOSE #
+##################
 sudo dnf -y install docker-compose
 
-# fix network issues in Fedora 32
+#########
+# FIXES #
+######### 
+
+# FIX network issues in Fedora 32
 # https://dev.to/ozorest/fedora-32-how-to-solve-docker-internal-network-issue-22me
-firewall-cmd --permanent --zone=trusted --add-interface=docker0
-firewall-cmd --reload
+sudo firewall-cmd --permanent --zone=trusted --add-interface=docker0
+sudo firewall-cmd --reload
