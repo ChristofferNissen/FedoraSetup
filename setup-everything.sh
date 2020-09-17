@@ -5,6 +5,7 @@
 # basic
 ./install_rpmfusion.sh
 ./install_commodities.sh
+./install-githubcli.sh
 
 DIR="../dotfiles/"
 if [ -d "$DIR" ]; then
