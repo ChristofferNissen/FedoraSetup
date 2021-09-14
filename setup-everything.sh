@@ -82,40 +82,7 @@ EOF
 # i3-gaps dependencies
 sudo dnf install libxcb-devel xcb-util-keysyms-devel xcb-util-devel xcb-util-wm-devel xcb-util-xrm-devel yajl-devel libXrandr-devel startup-notification-devel libev-devel xcb-util-cursor-devel libXinerama-devel libxkbcommon-devel libxkbcommon-x11-devel pcre-devel pango-devel git gcc automake i3status i3lock
 
-# i3-gaps
-DIR="../i3-gaps/"
-if [ -d "$DIR" ]; then
-  echo "i3-gaps already exists"
-  cd ..
-  cd i3-gaps
-  git checkout gaps && git pull
-  autoreconf --force --install
-  rm -rf build
-  mkdir build
-  cd build
-  ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
-  make
-  sudo make install
-  cd ../..
-  cd FedoraSetup
-else 
-  # Take action if $DIR doesnt exists. #
-  # run script in dotfiles to create symlinks
-  echo "Cloning dotfiles.."
-  cd ..
-  git clone https://www.github.com/Airblader/i3 i3-gaps
-  cd i3-gaps
-  git checkout gaps && git pull
-  autoreconf --force --install
-  rm -rf build
-  mkdir build
-  cd build
-  ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
-  make
-  sudo make install
-  cd ../..
-  cd FedoraSetup
-fi
+./install_i3-gaps.sh
 
 cat << "EOF" 
   ____                                      _           _   _             
@@ -188,6 +155,11 @@ cat << "EOF"
                          |___/                 
 EOF
 ./install_ohmyzsh.sh 
+
+
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
 
 cat << "EOF" 
   ____ _ _                      __ _       
