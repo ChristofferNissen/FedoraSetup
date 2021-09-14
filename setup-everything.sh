@@ -32,6 +32,7 @@ EOF
 ./install_forticlient.sh
 ./install_spotify.sh
 ./install-githubcli.sh
+./auto-connect-pulse-bluetooth.sh
 
 cat << "EOF" 
   ____                _   _             
